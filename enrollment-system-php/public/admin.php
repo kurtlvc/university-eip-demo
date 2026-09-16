@@ -239,9 +239,9 @@ try {
             <p class="note">Creates a new course offering with zero seats taken.</p>
             <form method="post">
                 <input type="hidden" name="form_type" value="create_course">
-                <label>Course ID <input name="course_id" required maxlength="20" placeholder="e.g. ENG101"></label>
-                <label>Term <input name="term" required maxlength="20" value="Fall2026"></label>
-                <label>Course name <input name="course_name" required maxlength="100" placeholder="e.g. Academic Writing"></label>
+                <label>Course ID <input name="course_id" required maxlength="20" placeholder="e.g. ITP103"></label>
+                <label>Term <input name="term" required maxlength="20" value="Second Sem"></label>
+                <label>Course name <input name="course_name" required maxlength="100" placeholder="e.g. System Integration and Architecture"></label>
                 <label>Capacity <input name="capacity" required type="number" min="0" value="30"></label>
                 <button type="submit">Create course</button>
             </form>

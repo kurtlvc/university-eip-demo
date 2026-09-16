@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS enrollment_errors (
 );
 
 INSERT INTO courses (course_id, term, course_name, capacity, seats_taken) VALUES
-  ('CS301',   'Fall2026', 'Data Structures', 3, 0),
-  ('MATH201', 'Fall2026', 'Linear Algebra',  40, 0),
-  ('HIST110', 'Fall2026', 'World History',   50, 0)
+  ('ITP103',   'Second Sem', 'System Integration and Architecture', 3, 0),
+  ('ITP104', 'Second Sem', 'Information Management',  40, 0),
+  ('ITEW3', 'Second Sem', 'Mobile Programming',   50, 0)
 ON DUPLICATE KEY UPDATE course_name = VALUES(course_name);

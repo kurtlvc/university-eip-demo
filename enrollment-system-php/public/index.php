@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 color: #6b7280;
                 font-size: 14px;
                 line-height: 1.6;">
-                Submit a request to enroll a student in a course.
+                Submit a request to enroll in a course.
             </p>
 
         </header>
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input
                     type="text"
                     name="course_id"
-                    placeholder="e.g. CS301"
+                    placeholder="e.g. ITP103"
                     style="
                         width: 100%;
                         padding: 13px 15px;
@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     color: #9ca3af;
                     font-size: 12px;
                     font-weight: normal;">
-                Example: CS301
+                Example: ITP103
                 </span>
             </label>
 
@@ -241,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     type="text"
                     name="term"
                     required
-                    value="Fall2026"
+                    value="Second Sem"
                     style="
                         width: 100%;
                         padding: 13px 15px;
@@ -298,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 color: #6b7280;
                 font-size: 12px;
                 line-height: 1.6;">
-            Submit CS301 for 4+ different student IDs to test if the Registrar rejects requests once the course capacity of 3 students is reached.
+            Submit ITP103 for 4+ different student IDs to test if the Registrar rejects requests once the course capacity of 3 students is reached.
             </p>
         </div>
     </div>
