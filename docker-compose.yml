@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: registrar-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: registrar
+      MYSQL_USER: registrar_user
+      MYSQL_PASSWORD: registrar_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: enrollment-rabbitmq
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI (guest/guest)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  enrollment-php:
+    build: ./enrollment-system-php
+    container_name: enrollment-system
+    ports:
+      - "8080:80"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: registrar
+      MYSQL_USER: registrar_user
+      MYSQL_PASS: registrar_pass
+
+  registrar-camel:
+    build: ./registrar-camel
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/registrar
+      SPRING_DATASOURCE_USERNAME: registrar_user
+      SPRING_DATASOURCE_PASSWORD: registrar_pass
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+
+volumes:
+  mysql_data:
